@@ -1,4 +1,5 @@
 ﻿using GestaoPDF.Data;
+using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace GestaoPDF
@@ -15,10 +16,12 @@ namespace GestaoPDF
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            builder.Services.AddMudServices();
             builder.Services.AddMauiBlazorWebView();
-#if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
-#endif
+            
+            #if DEBUG
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            #endif
 
             builder.Services.AddSingleton<WeatherForecastService>();
 
