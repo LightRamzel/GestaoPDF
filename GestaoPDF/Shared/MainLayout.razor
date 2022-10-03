@@ -12,10 +12,12 @@
         <MudIconButton Icon=@Icons.Custom.Brands.GitHub Color=Color.Inherit Edge=Edge.End Href="https://github.com/LightRamzel/ContadorPaginasPDF" Target="_blank"/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        @*NavMenu*@
+        <MenuLateral />
     </MudDrawer>
     <MudMainContent>
-        @Body
+        <MudContainer Class="pa-5">
+            @Body
+        </MudContainer>
     </MudMainContent>
 </MudLayout>
 @code {

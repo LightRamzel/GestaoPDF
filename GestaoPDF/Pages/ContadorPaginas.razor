@@ -1,0 +1,60 @@
+﻿@page "/ContadorPaginas"
+@inherits ContadorPaginasBase
+
+<TituloPagina Titulo="Contador de Páginas" />
+
+@if (!Arquivos.IsNullOrEmpty())
+{
+    <MudTable Items="@Arquivos"
+          Elevation=1
+          Dense=true
+          Hover=true
+          Bordered=false
+          Striped=false
+          Virtualize=true
+          Filter="new Func<Auxiliar,bool>(FiltrarTabela)"
+          @bind-SelectedItem="ArquivoTabela">
+        <ToolBarContent>
+            
+            <MudButton Variant=Variant.Filled
+                   StartIcon=@Icons.Custom.FileFormats.FileExcel
+                   Class="mr-1 mt-4"
+                   Size=Size.Small
+                   Color=Color.Primary>
+                Exportar Excel
+            </MudButton>
+
+            <MudButton Variant=Variant.Filled
+                   StartIcon=@Icons.Custom.FileFormats.FileExcel
+                   Class="ml-1 mt-4"
+                   Size=Size.Small
+                   Color=Color.Primary>
+                Exportar CSV
+            </MudButton>
+
+            <MudSpacer />
+            <MudTextField @bind-Value="TextoDigitado"
+                      Placeholder="Pesquisar pelo nome"
+                      Adornment=Adornment.Start
+                      AdornmentIcon=@Icons.Material.Rounded.Search
+                      IconSize=Size.Medium
+                      Class="mt-0" />
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Nome</MudTh>
+            <MudTh>Qtde. Páginas</MudTh>
+            <MudTh>Assinado</MudTh>
+            <MudTh>OCR</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+            <MudTd DataLabel="Qtde. Páginas">@context.QtdePaginas</MudTd>
+            <MudTd DataLabel="Assinado">@context.GetAssinado()</MudTd>
+            <MudTd DataLabel="OCR">@context.GetOcr()</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}
+
