@@ -27,7 +27,7 @@ public class ContadorPaginasBase : ComponentBase
     private void GerarListaVirtual()
     {
         for (int i = 1; i < 50; i++)
-            Arquivos.Add(new Auxiliar($"Arquivo {i}", (i * 2), true, true));
+            Arquivos.Add(new Auxiliar($"Arquivo {i}", (i * 2), true, false));
     }
 
     protected bool FiltrarTabela(Auxiliar element) =>
@@ -62,6 +62,12 @@ public class Auxiliar
     public int QtdePaginas { get; set; }
     public bool Assinado { get; set; }
     public bool Ocr { get; set; }
+
+    public MudBlazor.Color GetAssinadoColor() =>
+        this.Assinado ? MudBlazor.Color.Success : MudBlazor.Color.Error;
+
+    public MudBlazor.Color GetOcrColor() =>
+        this.Ocr ? MudBlazor.Color.Success : MudBlazor.Color.Error;
 
     public string GetAssinado() =>
         this.Assinado ? "Sim" : "Não";

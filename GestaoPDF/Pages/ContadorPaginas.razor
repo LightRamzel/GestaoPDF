@@ -15,42 +15,60 @@
           Filter="new Func<Auxiliar,bool>(FiltrarTabela)"
           @bind-SelectedItem="ArquivoTabela">
         <ToolBarContent>
-            
+            <MudTextField @bind-Value="TextoDigitado"
+                      Label="Pesquisa"
+                      Placeholder="Pesquisar pelo nome"
+                      Adornment=Adornment.Start
+                      AdornmentIcon=@Icons.Material.Rounded.Search
+                      IconSize=Size.Small
+                      AutoFocus=true
+                      Class="mt-0" />
+
+            <MudSpacer />
             <MudButton Variant=Variant.Filled
                    StartIcon=@Icons.Custom.FileFormats.FileExcel
                    Class="mr-1 mt-4"
                    Size=Size.Small
+                   DisableElevation=true
                    Color=Color.Primary>
                 Exportar Excel
             </MudButton>
-
             <MudButton Variant=Variant.Filled
                    StartIcon=@Icons.Custom.FileFormats.FileExcel
                    Class="ml-1 mt-4"
                    Size=Size.Small
+                   DisableElevation=true
                    Color=Color.Primary>
                 Exportar CSV
             </MudButton>
-
-            <MudSpacer />
-            <MudTextField @bind-Value="TextoDigitado"
-                      Placeholder="Pesquisar pelo nome"
-                      Adornment=Adornment.Start
-                      AdornmentIcon=@Icons.Material.Rounded.Search
-                      IconSize=Size.Medium
-                      Class="mt-0" />
         </ToolBarContent>
         <HeaderContent>
-            <MudTh>Nome</MudTh>
-            <MudTh>Qtde. Páginas</MudTh>
-            <MudTh>Assinado</MudTh>
-            <MudTh>OCR</MudTh>
+            <MudTh Class="table-head" Style="font-weight: bold;">Nome</MudTh>
+            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Páginas</MudTh>
+            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Assinado</MudTh>
+            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">OCR</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Nome">@context.Nome</MudTd>
-            <MudTd DataLabel="Qtde. Páginas">@context.QtdePaginas</MudTd>
-            <MudTd DataLabel="Assinado">@context.GetAssinado()</MudTd>
-            <MudTd DataLabel="OCR">@context.GetOcr()</MudTd>
+            <MudTd DataLabel="Nome">
+                <MudText Class="table-line">
+                    @context.Nome
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="Páginas">
+                <MudText Class="table-line" Align=Align.Right>
+                    @context.QtdePaginas
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="Assinado">
+                <MudText Class="table-line" Color=@context.GetAssinadoColor() Align=Align.Center>
+                    @context.GetAssinado()
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="OCR">
+                <MudText Class="table-line" Color=@context.GetOcrColor() Align=Align.Center>
+                    @context.GetOcr()
+                </MudText>
+            </MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager />
