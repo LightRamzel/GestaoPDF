@@ -1,0 +1,38 @@
+﻿<MudCard Class="mb-3">
+    <MudCardContent>
+        <MudGrid>
+            <MudItem xs="4" sm="4" md="4" lg="4" xl="4" xxl="4">
+                <MudIcon Icon=@Icone Color=@Cor Style="font-size: 4rem;" />
+            </MudItem>
+            <MudItem xs="8" sm="8" md="8" lg="8" xl="8" xxl="8">
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12" lg="12" xl="12" xxl="12" Class="pb-0">
+                        <MudText Style="font-size: .75rem; font-family: 'Roboto','Helvetica','Arial','sans-serif'; font-weight: 400); line-height: 1.99; letter-spacing: .08333em; text-transform: none;">
+                            @Titulo
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12" xl="12" xxl="12" Class="pt-0">
+                        <MudText Typo=Typo.h4>
+                            @Descricao
+                        </MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public string Icone { get; set; }
+
+    [Parameter]
+    public Color Cor { get; set; }
+
+    [Parameter]
+    public string Titulo { get; set; }
+
+    [Parameter]
+    public string Descricao { get; set; }
+}

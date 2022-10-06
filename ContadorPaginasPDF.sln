@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContadorPaginasPDF", "ContadorPaginasPDF\ContadorPaginasPDF.csproj", "{31095526-320B-46DA-9050-8F39E07F2FF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoPDF", "GestaoPDF\GestaoPDF.csproj", "{8F4506C2-1B86-4EA3-8FB5-D9DBB4ACD25D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPDF", "GestaoPDF\GestaoPDF.csproj", "{8F4506C2-1B86-4EA3-8FB5-D9DBB4ACD25D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

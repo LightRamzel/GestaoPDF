@@ -53,4 +53,9 @@
       <PackageReference Include="MudBlazor" Version="6.0.16" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\Models\" />
+      <Folder Include="Data\ModelViews\" />
+    </ItemGroup>
+
 </Project>

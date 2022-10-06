@@ -5,6 +5,33 @@
 
 @if (!Arquivos.IsNullOrEmpty())
 {
+    <MudGrid Spacing=1>
+        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+            <InfoCard Icone=@Icons.Custom.FileFormats.FilePdf
+                  Cor=Color.Default
+                  Titulo="Total de PDF"
+                  Descricao="@Arquivos.Count().ToString()" />
+        </MudItem>
+        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+            <InfoCard Icone=@Icons.Rounded.AutoStories
+                  Cor=Color.Default
+                  Titulo="Total de Páginas"
+                  Descricao="@Arquivos.Sum(x => x.QtdePaginas).ToString()" />
+        </MudItem>
+        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+            <InfoCard Icone=@Icons.Rounded.Edit
+                  Cor=Color.Default
+                  Titulo="Total com assinatura"
+                  Descricao="@Arquivos.Where(x => x.Assinado).Count().ToString()" />
+        </MudItem>
+        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+            <InfoCard Icone=@Icons.Rounded.FormatColorText
+                  Cor=Color.Default
+                  Titulo="Total com OCR"
+                  Descricao="@Arquivos.Where(x => x.Ocr).Count().ToString()" />
+        </MudItem>
+    </MudGrid>
+
     <MudTable Items="@Arquivos"
           Elevation=1
           Dense=true
@@ -12,7 +39,7 @@
           Bordered=false
           Striped=false
           Virtualize=true
-          Filter="new Func<Auxiliar,bool>(FiltrarTabela)"
+          Filter="new Func<ContadorPaginasview,bool>(FiltrarTabela)"
           @bind-SelectedItem="ArquivoTabela">
         <ToolBarContent>
             <MudTextField @bind-Value="TextoDigitado"
@@ -47,6 +74,7 @@
             <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Páginas</MudTh>
             <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Assinado</MudTh>
             <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">OCR</MudTh>
+            <MudTh Class="table-head table-column-width-50"></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nome">
@@ -69,10 +97,16 @@
                     @context.GetOcr()
                 </MudText>
             </MudTd>
+            <MudTd DataLabel="Detalhes">
+                <MudTooltip Text="Detalhes do PDF">
+                    <MudIconButton Icon=@Icons.Rounded.RemoveRedEye Size=Size.Small />
+                </MudTooltip>
+            </MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager />
         </PagerContent>
     </MudTable>
+
 }
 
