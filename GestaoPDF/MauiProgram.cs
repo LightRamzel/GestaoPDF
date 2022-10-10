@@ -1,6 +1,7 @@
 ﻿using GestaoPDF.Data;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.WebView.Maui;
+using GestaoPDF.Data.Views;
 
 namespace GestaoPDF
 {
@@ -24,6 +25,7 @@ namespace GestaoPDF
             #endif
 
             builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<List<ArquivoView>>();
 
             return builder.Build();
         }

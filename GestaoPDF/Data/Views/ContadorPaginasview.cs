@@ -37,9 +37,4 @@ namespace GestaoPDF.Data.Views
         public string GetOcr() =>
             this.Ocr ? "Sim" : "Não";
     }
-
-    public class Assinaturas
-    {
-        public string Nome { get; set; }
-    }
 }

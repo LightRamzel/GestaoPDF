@@ -1,9 +1,97 @@
-﻿<div class="mx-5 my-2">
-    <MudText>
-        Teste
-    </MudText>
-</div>
+﻿@inherits ImportarArquivosBase
 
-@code {
+<section class="d-flex justify-center mx-4">
+    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept="application/pdf" />
+    <MudButton HtmlTag="label"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Filled.CloudUpload"
+               FullWidth=true
+               for="fileInput">
+        Carregar PDF
+    </MudButton>
+</section>
 
+@if (!files.IsNullOrEmpty())
+{
+    <section class="d-flex justify-center mx-4">
+        <div>
+            <MudBadge Content=@files.Count()
+                  Color=Color.Error
+                  Overlap=true
+                  Bordered=true
+                  Class="my-4">
+                <MudButton HtmlTag="label"
+                       FullWidth=true
+                       Variant=Variant.Filled
+                       Color=Color.Tertiary
+                       Style="width: 208px;"
+                       StartIcon=@Icons.Filled.CloudUpload
+                       OnClick="() => _isOpen = !_isOpen">
+                    PDF Carregados
+                </MudButton>
+            </MudBadge>
+        </div>
+    </section>
+
+
+    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" Style="height: 100%; width: 300px;">
+        <div class="d-flex flex-column">
+            <MudText>Arquivos PDF Carregados</MudText>
+
+            <MudTextField @bind-Value="Pesquisa"
+                      Style="font-size: 11px;"
+                      Placeholder="Pesquisa pelo nome"
+                      Adornment=Adornment.Start
+                      Variant=Variant.Outlined
+                      AdornmentIcon=@Icons.Material.Filled.Search
+                      IconSize=Size.Small
+                      AutoFocus=true
+                      Immediate=true
+                      Margin=Margin.Dense
+                      Class="mt-2 mb-3" />
+
+            <MudCard Outlined="true">
+                <MudCardContent Class="pa-0">
+                    <MudTable Items="@files"
+                          Virtualize=true
+                          Dense=true
+                          Hover=true
+                          Bordered=false
+                          Striped=false
+                          Elevation=0
+                          FixedHeader=true
+                          Height="590px"
+                          Breakpoint="Breakpoint.Sm"
+                          Filter="new Func<IBrowserFile,bool>(Filtro)"
+                          @bind-SelectedItem="fileSelecionado">
+                        <HeaderContent>
+                            <MudTh>
+                                <MudText Style="font-size: 10px; font-weight: bold;">
+                                    Nome
+                                </MudText>
+                            </MudTh>
+                            <MudTh>
+
+                            </MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Nome">
+                                <MudText Style="font-size: 10px;">
+                                    @context.Name
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Remover">
+                                <MudIconButton Size=Size.Small
+                                           Icon=@Icons.Material.Filled.Delete
+                                           OnClick="() => files.Remove(context)" />
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudCardContent>
+            </MudCard>
+
+            <MudButton Size=Size.Small OnClick="() => _isOpen = !_isOpen" Class="my-3" Color=Color.Primary>Fechar</MudButton>
+        </div>
+    </MudPopover>
 }
