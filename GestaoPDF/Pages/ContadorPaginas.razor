@@ -6,25 +6,25 @@
 @if (!Arquivos.IsNullOrEmpty())
 {
     <MudGrid Spacing=1>
-        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+        <MudItem xs=12 sm=6 md=3 lg=3 xl=3 xxl=3>
             <InfoCard Icone=@Icons.Custom.FileFormats.FilePdf
                   Cor=Color.Default
                   Titulo="Total de PDF"
                   Descricao="@Arquivos.Count().ToString()" />
         </MudItem>
-        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+        <MudItem xs=12 sm=6 md=3 lg=3 xl=3 xxl=3>
             <InfoCard Icone=@Icons.Rounded.AutoStories
                   Cor=Color.Default
                   Titulo="Total de Páginas"
                   Descricao="@Arquivos.Sum(x => x.QtdePaginas).ToString()" />
         </MudItem>
-        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+        <MudItem xs=12 sm=6 md=3 lg=3 xl=3 xxl=3>
             <InfoCard Icone=@Icons.Rounded.Edit
                   Cor=Color.Default
                   Titulo="Total com assinatura"
                   Descricao="@Arquivos.Where(x => x.Assinado).Count().ToString()" />
         </MudItem>
-        <MudItem xs=6 sm=6 md=3 lg=3 xl=3 xxl=3>
+        <MudItem xs=12 sm=6 md=3 lg=3 xl=3 xxl=3>
             <InfoCard Icone=@Icons.Rounded.FormatColorText
                   Cor=Color.Default
                   Titulo="Total com OCR"
@@ -32,81 +32,102 @@
         </MudItem>
     </MudGrid>
 
-    <MudTable Items="@Arquivos"
-          Elevation=1
-          Dense=true
-          Hover=true
-          Bordered=false
-          Striped=false
-          Virtualize=true
-          Filter="new Func<ContadorPaginasview,bool>(FiltrarTabela)"
-          @bind-SelectedItem="ArquivoTabela">
-        <ToolBarContent>
-            <MudTextField @bind-Value="TextoDigitado"
-                      Label="Pesquisa"
-                      Placeholder="Pesquisar pelo nome"
-                      Adornment=Adornment.Start
-                      AdornmentIcon=@Icons.Material.Rounded.Search
-                      IconSize=Size.Small
-                      AutoFocus=true
-                      Class="mt-0" />
 
-            <MudSpacer />
-            <MudButton Variant=Variant.Filled
-                   StartIcon=@Icons.Custom.FileFormats.FileExcel
-                   Class="mr-1 mt-4"
-                   Size=Size.Small
-                   DisableElevation=true
-                   Color=Color.Primary>
-                Exportar Excel
-            </MudButton>
-            <MudButton Variant=Variant.Filled
-                   StartIcon=@Icons.Custom.FileFormats.FileExcel
-                   Class="ml-1 mt-4"
-                   Size=Size.Small
-                   DisableElevation=true
-                   Color=Color.Primary>
-                Exportar CSV
-            </MudButton>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh Class="table-head" Style="font-weight: bold;">Nome</MudTh>
-            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Páginas</MudTh>
-            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Assinado</MudTh>
-            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">OCR</MudTh>
-            <MudTh Class="table-head table-column-width-50"></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Nome">
-                <MudText Class="table-line">
-                    @context.Nome
-                </MudText>
-            </MudTd>
-            <MudTd DataLabel="Páginas">
-                <MudText Class="table-line" Align=Align.Right>
-                    @context.QtdePaginas
-                </MudText>
-            </MudTd>
-            <MudTd DataLabel="Assinado">
-                <MudText Class="table-line" Color=@context.GetAssinadoColor() Align=Align.Center>
-                    @context.GetAssinado()
-                </MudText>
-            </MudTd>
-            <MudTd DataLabel="OCR">
-                <MudText Class="table-line" Color=@context.GetOcrColor() Align=Align.Center>
-                    @context.GetOcr()
-                </MudText>
-            </MudTd>
-            <MudTd DataLabel="Detalhes">
-                <MudTooltip Text="Detalhes do PDF">
-                    <MudIconButton Icon=@Icons.Rounded.RemoveRedEye Size=Size.Small />
-                </MudTooltip>
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
-    </MudTable>
+
+    <MudCard>
+        <MudCardContent Class="pa-0">
+
+            <MudGrid Spacing="0">
+                <MudItem xs=12 sm=12 md=6 lg=6 xl=6 xxl=6 Class="pa-3">
+                    <MudTextField @bind-Value="TextoDigitado"
+                              Label="Pesquisa"
+                              Placeholder="Pesquisar pelo nome do arquivo e pressione ENTER"
+                              Adornment=Adornment.Start
+                              AdornmentIcon=@Icons.Material.Rounded.Search
+                              IconSize=Size.Small
+                              AutoFocus=true
+                              Style="font-size: 11px;"
+                              Class="mt-0" />
+                </MudItem>
+                <MudItem xs=12 sm=12 md=6 lg=6 xl=6 xxl=6 Class="pa-2">
+                    <div class="d-flex justify-end">
+                        <MudButton Variant=Variant.Filled
+                               StartIcon=@Icons.Custom.FileFormats.FileExcel
+                               Class="mr-1 mt-4"
+                               Size=Size.Small
+                               DisableElevation=true
+                               Color=Color.Primary>
+                            Exportar Excel
+                        </MudButton>
+                        <MudButton Variant=Variant.Filled
+                               StartIcon=@Icons.Custom.FileFormats.FileExcel
+                               Class="ml-1 mt-4"
+                               Size=Size.Small
+                               DisableElevation=true
+                               Color=Color.Primary>
+                            Exportar CSV
+                        </MudButton>
+                    </div>
+                </MudItem>
+                <MudItem xs=12 sm=12 md=12 lg=12 xl=12 xxl=12>
+                    <MudTable Items="@Arquivos"
+                          Elevation=0
+                          Dense=true
+                          Hover=true
+                          Bordered=false
+                          Striped=false
+                          Virtualize=true
+                          Filter="new Func<ContadorPaginasview,bool>(FiltrarTabela)"
+                          @bind-SelectedItem="ArquivoTabela">
+                        <HeaderContent>
+                            <MudTh Class="table-head" Style="font-weight: bold;">Nome</MudTh>
+                            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Páginas</MudTh>
+                            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">Assinado</MudTh>
+                            <MudTh Class="table-head table-column-width-50" Style="font-weight: bold; text-align: right;">OCR</MudTh>
+                            <MudTh Class="table-head table-column-width-50" Style="width: 35px;"></MudTh>
+                            <MudTh Class="table-head table-column-width-50" Style="width: 35px;"></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Nome">
+                                <MudText Class="table-line">
+                                    @context.Nome
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Páginas">
+                                <MudText Class="table-line" Align=Align.Right>
+                                    @context.QtdePaginas
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Assinado">
+                                <MudText Class="table-line" Color=@context.GetAssinadoColor() Align=Align.Center>
+                                    @context.GetAssinado()
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="OCR">
+                                <MudText Class="table-line" Color=@context.GetOcrColor() Align=Align.Center>
+                                    @context.GetOcr()
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Detalhes do PDF" Class="px-0">
+                                <MudTooltip Text="Detalhes do PDF">
+                                    <MudIconButton Icon=@Icons.Rounded.RemoveRedEye Size=Size.Small />
+                                </MudTooltip>
+                            </MudTd>
+                            <MudTd DataLabel="Visualizar PDF" Class="px-0">
+                                <MudTooltip Text="Visualizar PDF">
+                                    <MudIconButton Icon=@Icons.Custom.FileFormats.FilePdf Size=Size.Small />
+                                </MudTooltip>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager RowsPerPageString="Linhas por página: " PageSizeOptions="new int[] { 20, 40, 60, 80, 100 }" />
+                        </PagerContent>
+                    </MudTable>
+                </MudItem>
+            </MudGrid>
+
+        </MudCardContent>
+    </MudCard>
 
 }
 
