@@ -82,9 +82,14 @@
                                 </MudText>
                             </MudTd>
                             <MudTd DataLabel="Remover">
-                                <MudIconButton Size=Size.Small
-                                           Icon=@Icons.Material.Filled.Delete
-                                           OnClick="() => files.Remove(context)" />
+                                <div class="d-flex justify-end">
+                                    <MudTooltip Text="Visualizar PDF">
+                                        <MudIconButton Size=Size.Small Icon=@Icons.Custom.FileFormats.FilePdf OnClick="() => VisualizarPDF(context)"/>
+                                    </MudTooltip>
+                                    <MudTooltip Text="Remover PDF">
+                                        <MudIconButton Size=Size.Small Icon=@Icons.Material.Filled.Delete OnClick="() => files.Remove(context)" />
+                                    </MudTooltip>
+                                </div>
                             </MudTd>
                         </RowTemplate>
                     </MudTable>
