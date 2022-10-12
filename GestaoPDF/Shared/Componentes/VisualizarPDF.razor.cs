@@ -27,7 +27,7 @@ namespace GestaoPDF.Shared.Componentes
 
         public VisualizarPDFBase()
         {
-            style = "width: 600px;height: 600px;";
+            style = "width: 500px;height: 500px;";
         }
 
         protected override async Task OnInitializedAsync()
@@ -43,7 +43,7 @@ namespace GestaoPDF.Shared.Componentes
 
                 await JS.InvokeVoidAsync("ExibirPDF", URL);
 
-                style = "width: 601px; height: 601px;";
+                style = "width: 501px; height: 501px;";
 
                 StateHasChanged();
             }

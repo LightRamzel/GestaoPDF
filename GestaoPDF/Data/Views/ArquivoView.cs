@@ -15,15 +15,17 @@ public class ArquivoView
         Assinaturas = new List<Assinaturas>();
     }
 
-    public ArquivoView(string Nome, int QtdePaginas, bool Assinado, bool Ocr) : this()
+    public ArquivoView(string Nome, int QtdePaginas, bool Assinado, bool Ocr, FileView File) : this()
     {
         this.Nome = Nome;
         this.QtdePaginas = QtdePaginas;
         this.Assinado = Assinado;
         this.Ocr = Ocr;
+        this.FileId = File.Id;
     }
 
     public Guid Id { get; set; }
+    public Guid FileId { get; set; }
     public string Nome { get; set; }
     public int QtdePaginas { get; set; }
     public bool Assinado { get; set; }

@@ -11,3 +11,12 @@ function ExibirPDF(url)
     var preview = document.getElementById("embed-pdf");
     preview.src = url;
 }
+
+function RemoverFile(indexFile) {
+
+    var input = document.getElementById("fileInput");
+    var item = input.files[indexFile];
+    
+
+
+}

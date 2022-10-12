@@ -26,10 +26,10 @@ public class ImportarArquivosBase : ComponentBase
 
     protected string Pesquisa { get; set; }
 
-    protected IBrowserFile fileSelecionado { get; set; }
+    protected FileView fileSelecionado { get; set; }
 
 
-    protected IList<IBrowserFile> files = new List<IBrowserFile>();
+    protected List<FileView> files = new List<FileView>();
 
     protected bool _isOpen { get; set; }
 
@@ -48,25 +48,45 @@ public class ImportarArquivosBase : ComponentBase
     {
         foreach (var file in e.GetMultipleFiles())
         {
-            files.Add(file);
+            var NovoObjeto = new FileView(file);
 
-            Arquivos.Add(new ArquivoView(file.Name, 0, true, false));
+            files.Add(NovoObjeto);
+            Arquivos.Add(new ArquivoView(file.Name, 0, true, false, NovoObjeto));
         }
+
+        StateHasChanged();
     }
 
-    protected bool Filtro(IBrowserFile element) =>
+    protected bool Filtro(FileView element) =>
         Filtro(element, Pesquisa);
 
-    private bool Filtro(IBrowserFile element, string searchString)
+    private bool Filtro(FileView element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (element.File.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }
 
-    protected async Task VisualizarPDF(IBrowserFile file) 
+    protected async Task RemoverPDF(FileView file)
+    {
+        var Arquivo = Arquivos.Where(x => x.FileId == file.Id).FirstOrDefault();
+
+        if (!Equals(Arquivo, null)) 
+        {
+            var Index = files.IndexOf(file);
+
+            files.Remove(file);
+            Arquivos.Remove(Arquivo);
+
+            await JS.InvokeVoidAsync("RemoverFile", Index);
+
+            StateHasChanged();
+        }
+    }
+
+    protected async Task VisualizarPDF(FileView file)
     {
         var Index = files.IndexOf(file);
 
