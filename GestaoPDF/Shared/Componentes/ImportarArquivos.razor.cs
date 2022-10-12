@@ -13,7 +13,7 @@ namespace GestaoPDF.Shared.Componentes;
 
 public class ImportarArquivosBase : ComponentBase
 {
-    private DotNetObjectReference<ImportarArquivosBase>? objRef;
+    public DotNetObjectReference<ImportarArquivosBase> objRef;
 
     [Inject]
     private IJSRuntime JS { get; set; }
@@ -35,18 +35,13 @@ public class ImportarArquivosBase : ComponentBase
 
     public ImportarArquivosBase()
     {
+        objRef = DotNetObjectReference.Create(this);
         Arquivos = new List<ArquivoView>();
     }
 
     protected override void OnInitialized()
     {
-        GerarListaVirtual();
-    }
 
-    private void GerarListaVirtual()
-    {
-        for (int i = 1; i < 50; i++)
-            Arquivos.Add(new ArquivoView($"Arquivo_{i}.pdf", (i * 2), true, false));
     }
 
     protected void UploadFiles(InputFileChangeEventArgs e)
@@ -54,6 +49,8 @@ public class ImportarArquivosBase : ComponentBase
         foreach (var file in e.GetMultipleFiles())
         {
             files.Add(file);
+
+            Arquivos.Add(new ArquivoView(file.Name, 0, true, false));
         }
     }
 
@@ -73,7 +70,7 @@ public class ImportarArquivosBase : ComponentBase
     {
         var Index = files.IndexOf(file);
 
-        await JS.InvokeAsync<string>("GerarURL", objRef, Index);
+        await JS.InvokeVoidAsync("GerarURL", objRef, Index);
     }
 
     [JSInvokable]
@@ -90,6 +87,5 @@ public class ImportarArquivosBase : ComponentBase
 
         var Dialog = DialogService.Show<VisualizarPDF>($"Visualizar PDF", ParametersDialog, OptionDialog);
         var Result = await Dialog.Result;
-
     }
 }

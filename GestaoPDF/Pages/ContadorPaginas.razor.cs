@@ -1,5 +1,6 @@
 ﻿using GestaoPDF.Data.Views;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +21,12 @@ public class ContadorPaginasBase : ComponentBase
 
     public ContadorPaginasBase()
     {
-        //Arquivos = new List<ArquivoView>();
+
     }
 
     protected override void OnInitialized()
     {
-        //GerarListaVirtual();
-    }
 
-    private void GerarListaVirtual()
-    {
-        for (int i = 1; i < 50; i++)
-            Arquivos.Add(new ArquivoView($"Arquivo_{i}.pdf", (i * 2), true, false));
     }
 
     protected bool FiltrarTabela(ArquivoView element) =>

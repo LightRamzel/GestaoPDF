@@ -2,7 +2,9 @@
 
 <MudDialog DisableSidePadding="false">
     <DialogContent>
-        <embed src="" id="embed-pdf" class="mud-width-full" height="480px" />
+        <div style="@style">
+            <embed id="embed-pdf" style="@style" />
+        </div>
     </DialogContent>
     <DialogActions>
         <MudButton Color=Color.Default OnClick=Fechar>Fechar</MudButton>
