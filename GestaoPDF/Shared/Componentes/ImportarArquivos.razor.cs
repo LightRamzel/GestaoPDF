@@ -1,4 +1,5 @@
-﻿using GestaoPDF.Data.Views;
+﻿using GestaoPDF.Data.Interface;
+using GestaoPDF.Data.Views;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -14,6 +15,9 @@ namespace GestaoPDF.Shared.Componentes;
 public class ImportarArquivosBase : ComponentBase
 {
     public DotNetObjectReference<ImportarArquivosBase> objRef;
+
+    [Inject]
+    private IFolderPicker _folderPicker { get; set; }
 
     [Inject]
     private IJSRuntime JS { get; set; }
@@ -33,14 +37,22 @@ public class ImportarArquivosBase : ComponentBase
 
     protected bool _isOpen { get; set; }
 
+    private string DirectoryPath { get; set; }
+
     public ImportarArquivosBase()
     {
         objRef = DotNetObjectReference.Create(this);
         Arquivos = new List<ArquivoView>();
     }
 
-    protected override void OnInitialized()
+    protected async void GetDirectoryPath() 
     {
+        DirectoryPath = await _folderPicker.PickFolder();
+
+        if (string.IsNullOrEmpty(DirectoryPath)) 
+            return;
+
+        //TODO: Implementar a rotina de carregar os arquivos para ser utilizado no ITextSharp
 
     }
 

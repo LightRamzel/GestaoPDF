@@ -1,16 +1,29 @@
 ﻿@inherits ImportarArquivosBase
 
-<section class="d-flex justify-center mx-4">
+<section class="d-flex justify-center mx-4 mb-3">
+        <MudButton HtmlTag="label"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon=@Icons.Rounded.DriveFolderUpload
+               FullWidth=true
+               Style="font-size: 11px"
+               OnClick="GetDirectoryPath">
+        Selecionar Diretorio
+    </MudButton>
+</section>
+
+@*<section class="d-flex justify-center mx-4">
     <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept="application/pdf" />
     <MudButton HtmlTag="label"
                Variant="Variant.Filled"
                Color="Color.Primary"
-               StartIcon="@Icons.Filled.CloudUpload"
+               StartIcon=@Icons.Filled.CloudUpload
                FullWidth=true
+               Style="font-size: 11px"
                for="fileInput">
         Carregar PDF
     </MudButton>
-</section>
+</section>*@
 
 @if (!files.IsNullOrEmpty())
 {
