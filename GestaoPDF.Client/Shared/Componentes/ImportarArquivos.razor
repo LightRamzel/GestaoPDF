@@ -1,0 +1,120 @@
+﻿@inherits ImportarArquivosBase
+
+<section class="d-flex justify-center mx-4 mb-3">
+        <MudButton HtmlTag="label"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon=@Icons.Rounded.DriveFolderUpload
+               FullWidth=true
+               Style="font-size: 11px"
+               OnClick="GetDirectoryPath">
+        Selecionar Diretorio
+    </MudButton>
+</section>
+
+@*<section class="d-flex justify-center mx-4">
+    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept="application/pdf" />
+    <MudButton HtmlTag="label"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon=@Icons.Filled.CloudUpload
+               FullWidth=true
+               Style="font-size: 11px"
+               for="fileInput">
+        Carregar PDF
+    </MudButton>
+</section>*@
+
+@if (!files.IsNullOrEmpty())
+{
+    <section class="d-flex justify-center mx-4">
+        <div>
+            <MudBadge Content=@files.Count()
+                  Color=Color.Error
+                  Overlap=true
+                  Bordered=true
+                  Class="my-4">
+                <MudButton HtmlTag="label"
+                       FullWidth=true
+                       Variant=Variant.Filled
+                       Color=Color.Tertiary
+                       Style="width: 208px;"
+                       StartIcon=@Icons.Filled.CloudUpload
+                       OnClick="() => _isOpen = !_isOpen">
+                    PDF Carregados
+                </MudButton>
+            </MudBadge>
+        </div>
+    </section>
+
+
+    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" Style="height: 100%; width: 300px;">
+        <div class="d-flex flex-column">
+
+            <div class="d-flex justify-space-between">
+                <MudText>Arquivos PDF Carregados</MudText>
+                <MudIconButton Icon=@Icons.Rounded.Close
+                           Size=Size.Small
+                           OnClick="() => _isOpen = !_isOpen" />
+            </div>
+
+
+            <MudTextField @bind-Value="Pesquisa"
+                      Style="font-size: 11px;"
+                      Placeholder="Pesquisa pelo nome"
+                      Adornment=Adornment.Start
+                      Variant=Variant.Outlined
+                      AdornmentIcon=@Icons.Material.Filled.Search
+                      IconSize=Size.Small
+                      AutoFocus=true
+                      Immediate=true
+                      Margin=Margin.Dense
+                      Class="mt-4 mb-3" />
+
+            <MudCard Outlined="true">
+                <MudCardContent Class="pa-0">
+                    <MudTable Items="@files"
+                          Virtualize=true
+                          Dense=true
+                          Hover=true
+                          Bordered=false
+                          Striped=false
+                          Elevation=0
+                          FixedHeader=true
+                          Height="350px"
+                          Breakpoint="Breakpoint.Sm"
+                          Filter="new Func<FileView,bool>(Filtro)"
+                          @bind-SelectedItem="fileSelecionado">
+                        <HeaderContent>
+                            <MudTh>
+                                <MudText Style="font-size: 10px; font-weight: bold;">
+                                    Nome
+                                </MudText>
+                            </MudTh>
+                            <MudTh>
+
+                            </MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Nome">
+                                <MudText Style="font-size: 10px;">
+                                    @context.File.Name
+                                </MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Remover">
+                                <div class="d-flex justify-end">
+                                    <MudTooltip Text="Visualizar PDF">
+                                        <MudIconButton Size=Size.Small Icon=@Icons.Custom.FileFormats.FilePdf OnClick="() => VisualizarPDF(context)" />
+                                    </MudTooltip>
+                                    <MudTooltip Text="Remover PDF">
+                                        <MudIconButton Size=Size.Small Icon=@Icons.Material.Filled.Delete OnClick="() => RemoverPDF(context)" />
+                                    </MudTooltip>
+                                </div>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudCardContent>
+            </MudCard>
+        </div>
+    </MudPopover>
+}
