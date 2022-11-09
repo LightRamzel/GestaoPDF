@@ -1,1 +1,1 @@
-# Contador de Páginas PDF
+# Gestão de PDF
