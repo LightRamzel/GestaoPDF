@@ -14,7 +14,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoPDF.Application.Helper
+namespace GestaoPDF.Application.Helpers
 {
     public class LeituraHelper
     {

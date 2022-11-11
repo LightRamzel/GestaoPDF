@@ -10,7 +10,7 @@ namespace GestaoPDF.Domain.Entities
     {
         public LeituraDocumento(string? nomeLoteLiteura, string? nomeUsuarioMaquina, string? nomeMaquina, IList<Documento> documentos)
         {
-            NomeLoteLiteura = nomeLoteLiteura;
+            NomeLoteLeitura = nomeLoteLiteura;
             NomeUsuarioMaquina = nomeUsuarioMaquina;
             NomeMaquina = nomeMaquina;
             Documentos = documentos;
@@ -19,7 +19,7 @@ namespace GestaoPDF.Domain.Entities
         }
 
         public Guid Id { get; private set; }
-        public string? NomeLoteLiteura { get; private set; }
+        public string? NomeLoteLeitura { get; private set; }
         public DateTime DataGravacao { get; private set; }
         public string? NomeUsuarioMaquina { get; set; }
         public string? NomeMaquina { get; set; }

@@ -3,6 +3,9 @@ using MudBlazor.Services;
 using GestaoPDF.Client.Data.Views;
 using GestaoPDF.Client.Data.Interface;
 using Microsoft.Extensions.DependencyInjection;
+using GestaoPDF.Application.IServices;
+using GestaoPDF.Application.Services;
+using GestaoPDF.Domain.Entities;
 
 namespace GestaoPDF.Client
 {
@@ -30,6 +33,7 @@ namespace GestaoPDF.Client
             #endif
 
             builder.Services.AddSingleton<List<ArquivoView>>();
+            builder.Services.AddSingleton<IServiceBase<LeituraDocumento>, LeituraDocumentoService>();
 
             return builder.Build();
         }

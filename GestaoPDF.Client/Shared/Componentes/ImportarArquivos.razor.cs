@@ -1,4 +1,4 @@
-﻿using GestaoPDF.Application.Helper;
+﻿using GestaoPDF.Application.Helpers;
 using GestaoPDF.Client.Data.Interface;
 using GestaoPDF.Client.Data.Views;
 using Microsoft.AspNetCore.Components;
