@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPDF.Domain", "GestaoP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPDF.Application", "GestaoPDF.Application\GestaoPDF.Application.csproj", "{6EA7CCBC-CA07-492B-9BB9-C18495060BE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoPDF.Infra.Data", "GestaoPDF.Infra.Data\GestaoPDF.Infra.Data.csproj", "{0ECECE07-8674-40DD-9D2C-C21D5A789AC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{6EA7CCBC-CA07-492B-9BB9-C18495060BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA7CCBC-CA07-492B-9BB9-C18495060BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA7CCBC-CA07-492B-9BB9-C18495060BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECECE07-8674-40DD-9D2C-C21D5A789AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECECE07-8674-40DD-9D2C-C21D5A789AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECECE07-8674-40DD-9D2C-C21D5A789AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECECE07-8674-40DD-9D2C-C21D5A789AC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

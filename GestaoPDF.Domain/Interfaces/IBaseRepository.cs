@@ -1,12 +1,13 @@
-﻿using System;
+﻿using GestaoPDF.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoPDF.Application.IServices
+namespace GestaoPDF.Domain.Interfaces
 {
-    public interface IServiceBase<T>
+    public interface IBaseRepository<T>
     {
         /// <summary>
         /// Inserir os dados de uma tabela
@@ -34,5 +35,18 @@ namespace GestaoPDF.Application.IServices
         /// </summary>
         /// <returns><c>True</c> se a gravação for bem sucedida</returns>
         Task<bool> DeleteAllAsync();
+
+        /// <summary>
+        /// Selecionar o modelo peelo id
+        /// </summary>
+        /// <param name="id">Chave Primária</param>
+        /// <returns>Objeto</returns>
+        Task<T> SelectByIdAsync(Guid id);
+
+        /// <summary>
+        /// Seleciontar todos os itens da tabela
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<LeituraDocumento>> SelectAllAsync();
     }
 }

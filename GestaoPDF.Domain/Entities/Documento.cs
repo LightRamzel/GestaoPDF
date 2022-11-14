@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GestaoPDF.Domain.Entities
+﻿namespace GestaoPDF.Domain.Entities
 {
     public class Documento
     {
+        public Documento()
+        { }
+
         public Documento(string caminhoArquivoLeitura)
         {
             Id = Guid.NewGuid();
@@ -20,19 +16,43 @@ namespace GestaoPDF.Domain.Entities
             AssinaturasDigitais = new List<DocumentoAssinatura>();
         }
 
-        public Guid Id { get; private set; }
-        public DateTime DataLeitura { get; private set; }
-        public string? NomeArquivo { get; private set; }
-        public DateTime DataCriacao { get; private set; }
-        public string CaminhoArquivoLeitura { get; private set; }
-        public long TamanhoArquivo { get; private set; }
-        public int QuantidadePaginas { get; private set; }
-        public bool Ocr { get; private set; }
-        public bool AssinadoCertificado { get; private set; }
-        public bool CaminhoValido { get; private set; }
-        public bool PdfValido { get; private set; }
+        public Documento(Documento documento)
+        {
+            Id = documento.Id;
+            IdLeituraDocumento = documento.IdLeituraDocumento;
+            DataCriacao= documento.DataCriacao;
+            DataLeitura = documento.DataLeitura;
+            NomeArquivo = documento.NomeArquivo;
+            CaminhoArquivoLeitura = documento.CaminhoArquivoLeitura;
+            TamanhoArquivo = documento.TamanhoArquivo;
+            QuantidadePaginas = documento.QuantidadePaginas;
+            Ocr = documento.Ocr;
+            AssinadoCertificado = documento.AssinadoCertificado;
+            CaminhoValido= documento.CaminhoValido;
+            PdfValido= documento.PdfValido;
+            AssinaturasDigitais = documento.AssinaturasDigitais;
 
-        public IList<DocumentoAssinatura> AssinaturasDigitais { get; set; }
+            if (AssinaturasDigitais == null)
+                AssinaturasDigitais = new List<DocumentoAssinatura>();
+        }
+
+        public Guid Id { get; set; }
+        public Guid IdLeituraDocumento { get; set; }
+        public DateTime DataLeitura { get; set; }
+        public string? NomeArquivo { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public string CaminhoArquivoLeitura { get; set; }
+        public long TamanhoArquivo { get; set; }
+        public int QuantidadePaginas { get; set; }
+        public bool Ocr { get; set; }
+        public bool AssinadoCertificado { get; set; }
+        public bool CaminhoValido { get; set; }
+        public bool PdfValido { get; set; }
+
+        public IList<DocumentoAssinatura> AssinaturasDigitais { get; private set; }
+
+        public void SetAssinaturasDigitais(IList<DocumentoAssinatura> assinaturasDigitais) =>
+            AssinaturasDigitais = assinaturasDigitais;
 
         private void SetDadosLeituraArquivo()
         {
