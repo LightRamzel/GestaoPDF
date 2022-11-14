@@ -26,4 +26,6 @@ public class ArquivoView : Documento
 
     public string GetOcr() =>
         this.Ocr ? "Sim" : "Não";
+
+    public Documento GetBase() => this;
 }

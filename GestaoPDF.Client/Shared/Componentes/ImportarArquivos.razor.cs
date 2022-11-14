@@ -1,6 +1,8 @@
 ﻿using GestaoPDF.Application.Helpers;
+using GestaoPDF.Application.Services;
 using GestaoPDF.Client.Data.Interface;
 using GestaoPDF.Client.Data.Views;
+using GestaoPDF.Domain.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -24,10 +26,13 @@ public class ImportarArquivosBase : ComponentBase
     private IJSRuntime JS { get; set; }
 
     [Inject]
-    public List<ArquivoView> Arquivos { get; set; }
+    protected IDialogService DialogService { get; set; }
 
     [Inject]
-    protected IDialogService DialogService { get; set; }
+    private ILeituraDocumentoRepository AppService { get; set; }
+
+    [Inject]
+    protected List<ArquivoView> Arquivos { get; set; }
 
     protected string Pesquisa { get; set; }
 
@@ -46,8 +51,21 @@ public class ImportarArquivosBase : ComponentBase
     {
         _leituraHelper = new LeituraHelper();
         objRef = DotNetObjectReference.Create(this);
-        Arquivos = new List<ArquivoView>();
     }
+
+    //protected async override Task OnInitializedAsync()
+    //{
+    //    //Testar leitura da tabela no banco de dados
+    //    var leituras = await AppService.SelectAllAsync();
+
+    //    //Testar seleção por um único item
+    //    if (leituras != null && leituras.Count > 0)
+    //    {
+    //        var idLeitura = leituras.Select(x => x.Id).FirstOrDefault();
+
+    //        var leitura = await AppService.SelectByIdAsync(idLeitura);
+    //    }
+    //}
 
     protected async void GetDirectoryPath() 
     {
@@ -62,7 +80,20 @@ public class ImportarArquivosBase : ComponentBase
 
         Arquivos.AddRange(arquivos);
 
+        // Teste de salvar leitura
+        //await SalvarLeitura();
+
         StateHasChanged();
+    }
+
+    protected async Task SalvarLeitura()
+    {
+        var leitura = new Domain.Entities.LeituraDocumento($"Leitura {DateTime.Now:dd-MM-yyyy HH:mm:ss}"
+            , DeviceInfo.Name
+            , DeviceInfo.Current.Model);
+        leitura.SetDocumentos(Arquivos);
+
+        await AppService.InsertAsync(leitura);
     }
 
     protected void UploadFiles(InputFileChangeEventArgs e)

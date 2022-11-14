@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="itext7" Version="7.2.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GestaoPDF.Domain\GestaoPDF.Domain.csproj" />
-    <ProjectReference Include="..\GestaoPDF.Infra.Data\GestaoPDF.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

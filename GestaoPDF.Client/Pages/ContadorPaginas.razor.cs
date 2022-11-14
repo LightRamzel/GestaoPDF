@@ -18,7 +18,6 @@ public class ContadorPaginasBase : ComponentBase
     [Inject]
     protected List<ArquivoView> Arquivos { get; set; }
 
-
     public ContadorPaginasBase()
     {
 
