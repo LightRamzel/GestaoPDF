@@ -21,6 +21,7 @@ using GestaoPDF.Infra.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using GestaoPDF.Client.Wpf.Services;
+using GestaoPDF.Client.Components.Extensions;
 
 namespace GestaoPDF.Client.Wpf
 {
@@ -35,20 +36,15 @@ namespace GestaoPDF.Client.Wpf
 
 			var serviceCollection = new ServiceCollection();
 
-			serviceCollection.AddWpfBlazorWebView();
-			serviceCollection.AddMudServices();
+			serviceCollection.AddGestaoPdfComponents(AppDomain.CurrentDomain.BaseDirectory);
 
+			serviceCollection.AddTransient<IFolderPicker, FolderPicker>();
+			
+			serviceCollection.AddWpfBlazorWebView();
+			
 			#if DEBUG
 			serviceCollection.AddBlazorWebViewDeveloperTools();
 			#endif
-
-			serviceCollection.AddTransient<IFolderPicker, FolderPicker>();
-
-			Constants.SetDatabasePath(AppDomain.CurrentDomain.BaseDirectory);
-
-			serviceCollection.AddSingleton<ILeituraDocumentoRepository, LeituraDocumentoService>(x => new LeituraDocumentoService(new LeituraDocumentoRepository()));
-			serviceCollection.AddSingleton<List<ArquivoView>>();
-			
 
 			Resources.Add("services", serviceCollection.BuildServiceProvider());
 		}

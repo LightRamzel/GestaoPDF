@@ -8,6 +8,7 @@ using GestaoPDF.Client.Components.Data;
 using GestaoPDF.Domain.Entities;
 using GestaoPDF.Infra.Data.DataConfiguration;
 using GestaoPDF.Infra.Data.Repository;
+using GestaoPDF.Client.Components.Extensions;
 
 namespace GestaoPDF.Client.Maui
 {
@@ -23,21 +24,18 @@ namespace GestaoPDF.Client.Maui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            builder.Services.AddMudServices();
-            builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddGestaoPdfComponents(FileSystem.AppDataDirectory);
+
+            #if WINDOWS
+            builder.Services.AddTransient<IFolderPicker, GestaoPDF.Client.Maui.Platforms.Windows.Services.FolderPicker>();
+            #endif
+
+			builder.Services.AddMauiBlazorWebView();
 
             #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
-#endif
-
-#if WINDOWS
-            builder.Services.AddTransient<IFolderPicker, GestaoPDF.Client.Maui.Platforms.Windows.Services.FolderPicker>();
-#endif
-            Constants.SetDatabasePath(FileSystem.AppDataDirectory);
-
-            builder.Services.AddSingleton<ILeituraDocumentoRepository, LeituraDocumentoService>(x => new LeituraDocumentoService(new LeituraDocumentoRepository()));
-            builder.Services.AddSingleton<List<ArquivoView>>();
+            #endif
 
             return builder.Build();
         }
