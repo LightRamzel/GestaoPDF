@@ -1,55 +1,48 @@
 ﻿using GestaoPDF.Application.Helpers;
-using GestaoPDF.Application.Services;
 using GestaoPDF.Client.Components.Data.Views;
 using GestaoPDF.Domain.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoPDF.Client.Components.Shared.Componentes;
 
 public class ImportarArquivosBase : ComponentBase
 {
-    public DotNetObjectReference<ImportarArquivosBase> objRef;
+    private readonly DotNetObjectReference<ImportarArquivosBase> _objRef;
 
     [Inject]
-    private IFolderPicker _folderPicker { get; set; }
+    private IFolderPicker FolderPicker { get; set; } = null!;
 
     [Inject]
-    private IJSRuntime JS { get; set; }
+    private IJSRuntime JS { get; set; } = null!;
 
     [Inject]
-    protected IDialogService DialogService { get; set; }
+    protected IDialogService DialogService { get; set; } = null!;
 
     [Inject]
-    private ILeituraDocumentoRepository AppService { get; set; }
+    private ILeituraDocumentoRepository AppService { get; set; } = null!;
 
     [Inject]
-    protected List<ArquivoView> Arquivos { get; set; }
+    protected List<ArquivoView> Arquivos { get; set; } = null!;
 
-    protected string Pesquisa { get; set; }
+    protected string? Pesquisa { get; set; }
 
-    protected FileView fileSelecionado { get; set; }
+    protected FileView? FileSelecionado;
 
+    protected List<FileView> Files = new();
 
-    protected List<FileView> files = new List<FileView>();
+    protected bool IsOpen { get; set; }
 
-    protected bool _isOpen { get; set; }
-
-    private string DirectoryPath { get; set; }
+    private string? _directoryPath;
 
     private readonly LeituraHelper _leituraHelper;
 
     public ImportarArquivosBase()
     {
         _leituraHelper = new LeituraHelper();
-        objRef = DotNetObjectReference.Create(this);
+        _objRef = DotNetObjectReference.Create(this);
     }
 
     //protected async override Task OnInitializedAsync()
@@ -68,12 +61,12 @@ public class ImportarArquivosBase : ComponentBase
 
     protected async void GetDirectoryPath() 
     {
-        DirectoryPath = await _folderPicker.PickFolder();
+        _directoryPath = await FolderPicker.PickFolder();
 
-        if (string.IsNullOrEmpty(DirectoryPath)) 
+        if (string.IsNullOrEmpty(_directoryPath)) 
             return;
 
-        var arquivos = _leituraHelper.CaminhosArquivos(DirectoryPath).Select(x => new ArquivoView(x)).ToList();
+        var arquivos = _leituraHelper.CaminhosArquivos(_directoryPath).Select(x => new ArquivoView(x)).ToList();
 
         await _leituraHelper.FazerLeituraAsync(arquivos);
 
@@ -101,21 +94,18 @@ public class ImportarArquivosBase : ComponentBase
         {
             var NovoObjeto = new FileView(file);
 
-            files.Add(NovoObjeto);
+            Files.Add(NovoObjeto);
             //Arquivos.Add(new ArquivoView(file.Name, 0, true, false, NovoObjeto));
         }
 
         StateHasChanged();
     }
 
-    protected bool Filtro(FileView element) =>
-        Filtro(element, Pesquisa);
-
-    private bool Filtro(FileView element, string searchString)
+    protected bool Filtro(FileView element) 
     {
-        if (string.IsNullOrWhiteSpace(searchString))
+        if (string.IsNullOrWhiteSpace(Pesquisa))
             return true;
-        if (element.File.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (element.File.Name.Contains(Pesquisa, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }
@@ -126,9 +116,9 @@ public class ImportarArquivosBase : ComponentBase
 
         if (!Equals(Arquivo, null)) 
         {
-            var Index = files.IndexOf(file);
+            var Index = Files.IndexOf(file);
 
-            files.Remove(file);
+            Files.Remove(file);
             Arquivos.Remove(Arquivo);
 
             await JS.InvokeVoidAsync("RemoverFile", Index);
@@ -139,22 +129,26 @@ public class ImportarArquivosBase : ComponentBase
 
     protected async Task VisualizarPDF(FileView file)
     {
-        var Index = files.IndexOf(file);
+        var Index = Files.IndexOf(file);
 
-        await JS.InvokeVoidAsync("GerarURL", objRef, Index);
+        await JS.InvokeVoidAsync("GerarURL", _objRef, Index);
     }
 
     [JSInvokable]
     public async Task ExibirPDF(string URL)
     {
-        var ParametersDialog = new DialogParameters();
-        ParametersDialog.Add("URL", URL);
+        var ParametersDialog = new DialogParameters
+        {
+            { "URL", URL }
+        };
 
-        var OptionDialog = new DialogOptions();
-        OptionDialog.MaxWidth = MaxWidth.Medium;
-        OptionDialog.CloseButton = true;
-        OptionDialog.DisableBackdropClick = true;
-        OptionDialog.Position = DialogPosition.Center;
+        var OptionDialog = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Medium,
+            CloseButton = true,
+            DisableBackdropClick = true,
+            Position = DialogPosition.Center
+        };
 
         var Dialog = DialogService.Show<VisualizarPDF>($"Visualizar PDF", ParametersDialog, OptionDialog);
         var Result = await Dialog.Result;

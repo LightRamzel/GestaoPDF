@@ -25,11 +25,11 @@
     </MudButton>
 </section>*@
 
-@if (!files.IsNullOrEmpty())
+@if (!Files.IsNullOrEmpty())
 {
     <section class="d-flex justify-center mx-4">
         <div>
-            <MudBadge Content=@files.Count()
+            <MudBadge Content=@Files.Count()
                   Color=Color.Error
                   Overlap=true
                   Bordered=true
@@ -40,7 +40,7 @@
                        Color=Color.Tertiary
                        Style="width: 208px;"
                        StartIcon=@Icons.Filled.CloudUpload
-                       OnClick="() => _isOpen = !_isOpen">
+                       OnClick="() => IsOpen = !IsOpen">
                     PDF Carregados
                 </MudButton>
             </MudBadge>
@@ -48,14 +48,14 @@
     </section>
 
 
-    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" Style="height: 100%; width: 300px;">
+    <MudPopover Open="@IsOpen" Fixed="true" Class="px-4 pt-4" Style="height: 100%; width: 300px;">
         <div class="d-flex flex-column">
 
             <div class="d-flex justify-space-between">
                 <MudText>Arquivos PDF Carregados</MudText>
                 <MudIconButton Icon=@Icons.Rounded.Close
                            Size=Size.Small
-                           OnClick="() => _isOpen = !_isOpen" />
+                           OnClick="() => IsOpen = !IsOpen" />
             </div>
 
 
@@ -73,7 +73,7 @@
 
             <MudCard Outlined="true">
                 <MudCardContent Class="pa-0">
-                    <MudTable Items="@files"
+                    <MudTable Items="@Files"
                           Virtualize=true
                           Dense=true
                           Hover=true
@@ -84,7 +84,7 @@
                           Height="350px"
                           Breakpoint="Breakpoint.Sm"
                           Filter="new Func<FileView,bool>(Filtro)"
-                          @bind-SelectedItem="fileSelecionado">
+                          @bind-SelectedItem="FileSelecionado">
                         <HeaderContent>
                             <MudTh>
                                 <MudText Style="font-size: 10px; font-weight: bold;">

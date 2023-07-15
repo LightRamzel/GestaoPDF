@@ -1,45 +1,24 @@
 ﻿using GestaoPDF.Client.Components.Data.Views;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoPDF.Client.Components.Pages;
 
 public class ContadorPaginasBase : ComponentBase
 {
-    protected string TextoDigitado { get; set; }
-    protected ArquivoView ArquivoTabela { get; set; }
+    protected string? TextoDigitado { get; set; }
+    protected ArquivoView? ArquivoTabela { get; set; }
 
     [Inject]
-    protected List<ArquivoView> Arquivos { get; set; }
+    protected List<ArquivoView> Arquivos { get; set; } = null!;
 
-    public ContadorPaginasBase()
+    protected bool FiltrarTabela(ArquivoView? element)
     {
-
-    }
-
-    protected override void OnInitialized()
-    {
-
-    }
-
-    protected bool FiltrarTabela(ArquivoView element) =>
-        FiltrarTabela(element, TextoDigitado);
-
-    private bool FiltrarTabela(ArquivoView element, string textoDigitado)
-    {
-        if (string.IsNullOrWhiteSpace(textoDigitado))
+        if (element == null || string.IsNullOrWhiteSpace(TextoDigitado))
             return true;
 
-        if (element.NomeArquivo.Contains(textoDigitado, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrEmpty(element.NomeArquivo) && element.NomeArquivo.Contains(TextoDigitado, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
     }
-
 }

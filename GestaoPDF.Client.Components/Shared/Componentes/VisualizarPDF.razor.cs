@@ -1,38 +1,28 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoPDF.Client.Components.Shared.Componentes
 {
     public class VisualizarPDFBase : ComponentBase
     {
         [Inject]
-        private IJSRuntime JS { get; set; }
+        private IJSRuntime JS { get; set; } = null!;
 
         [CascadingParameter]
-        public MudDialogInstance MudDialog { get; set; }
+        public MudDialogInstance MudDialog { get; set; } = null!;
 
         [Parameter]
-        public string URL { get; set; }
+        public string URL { get; set; } = string.Empty;
 
-        protected string style { get; set; }
+        protected string Style { get; set; }
 
         protected void Fechar() =>
             MudDialog.Cancel();
 
         public VisualizarPDFBase()
         {
-            style = "width: 500px;height: 500px;";
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            //await JS.InvokeVoidAsync("ExibirPDF", URL);
+            Style = "width: 500px;height: 500px;";
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -43,7 +33,7 @@ namespace GestaoPDF.Client.Components.Shared.Componentes
 
                 await JS.InvokeVoidAsync("ExibirPDF", URL);
 
-                style = "width: 501px; height: 501px;";
+                Style = "width: 501px; height: 501px;";
 
                 StateHasChanged();
             }
